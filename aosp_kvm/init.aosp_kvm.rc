@@ -1,0 +1,62 @@
+# Copyright (C) 2012 The Android Open Source Project
+#
+# IMPORTANT: Do not create world writable files or directories.
+# This is a common source of Android security bugs.
+#
+
+on early-init
+    export EXTERNAL_STORAGE /mnt/sdcard
+	setprop ro.sf.lcd_density 130
+    mount debugfs debugfs /sys/kernel/debug
+    chmod 755 /sys/kernel/debug
+
+on init
+
+on fs
+# mount mtd partitions
+    # Mount /system rw first to give the filesystem a chance to save a checkpoint
+    mount ext4 /dev/block/sda /system
+    mount ext4 /dev/block/sda /system ro remount
+    mount ext4 /dev/block/sdb /data nosuid nodev
+    mount ext4 /dev/block/sdc /cache nosuid nodev
+
+on post-fs
+
+on post-fs-data
+    setprop dalvik.vm.heapstartsize 8m
+    setprop dalvik.vm.heapstartsize 8m
+    setprop dalvik.vm.heapsize 384m
+
+    mkdir /data/misc/dhcp 1777 system system
+
+on boot
+    chown root shell /sys/kernel/debug/tracing/trace_marker
+
+# Set this property so surfaceflinger is not started by system_init
+    setprop system_init.startsurfaceflinger 0
+
+# additional initialization
+service bigcore-setup /system/bin/sh /system/etc/init.andevcon_boston2013_aosp_kvm.sh
+    class core
+    oneshot
+
+service sshd /system/bin/start-ssh
+    class main
+
+service dhcpcd_eth0 /system/bin/dhcpcd -o domain_name_servers -ABKL
+    class main
+    oneshot
+
+service iprenew_eth0 /system/bin/dhcpcd -o domain_name_servers -n
+    class main
+    oneshot
+
+# NUBO: applications that request external memory see virtual sd.
+# create virtual SD card at /mnt/sdcard, based on the /data/media directory
+# daemon will drop to user/group system/media_rw after initializing
+# underlying files in /data/media will be created with user and group media_rw (1023)
+service sdcard /system/bin/sdcard /data/media /mnt/sdcard 1023 1023
+    class core
+    class main
+    class late_start
+    oneshot
