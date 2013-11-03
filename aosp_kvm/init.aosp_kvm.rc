@@ -36,7 +36,7 @@ on boot
     setprop system_init.startsurfaceflinger 0
 
 # additional initialization
-service bigcore-setup /system/bin/sh /system/etc/init.andevcon_boston2013_aosp_kvm.sh
+service bigcore-setup /system/bin/sh /system/etc/init.andevcon_2013_aosp_kvm.sh
     class core
     oneshot
 

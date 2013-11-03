@@ -20,6 +20,6 @@
 # In particular, you can add lunch options with the add_lunch_combo
 # function: add_lunch_combo generic-eng
 
-add_lunch_combo andevcon_boston2013_aosp_kvm-eng
-add_lunch_combo andevcon_boston2013_aosp_kvm-userdebug
-add_lunch_combo andevcon_boston2013_aosp_kvm-user
+add_lunch_combo andevcon_2013_aosp_kvm-eng
+add_lunch_combo andevcon_2013_aosp_kvm-userdebug
+add_lunch_combo andevcon_2013_aosp_kvm-user

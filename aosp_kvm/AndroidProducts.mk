@@ -26,4 +26,4 @@
 #
 
 PRODUCT_MAKEFILES += \
-    $(LOCAL_DIR)/andevcon_boston2013_aosp_kvm.mk
+    $(LOCAL_DIR)/andevcon_2013_aosp_kvm.mk
