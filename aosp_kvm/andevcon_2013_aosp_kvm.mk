@@ -1,7 +1,7 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 LOCAL_PATH := $(call my-dir)
-DEVICE_PACKAGE_OVERLAYS := device/nubo/aosp_kvm/overlay
+DEVICE_PACKAGE_OVERLAYS := device/AnDevCon/aosp_kvm/overlay
 PRODUCT_PACKAGES +=
 PRODUCT_COPY_FILES +=
 PRODUCT_NAME := andevcon_2013_aosp_kvm # This must be equal to the  Makefile prefix defined in AndroidProducts
@@ -12,7 +12,6 @@ BUILD_ID := AnDevCon_2013.11.03
 
 # Openssh
 PRODUCT_PACKAGES += \
-        AndroidTerm \
         openssh \
         scp \
         sftp \
@@ -20,14 +19,17 @@ PRODUCT_PACKAGES += \
         sshd \
         sshd_config \
         ssh-keygen \
-        start-ssh
+        start-ssh \
+        AndroidTerm \
+        hello_c_example \
+        rild
 
 PRODUCT_COPY_FILES += \
         device/AnDevCon/aosp_kvm/init.aosp_kvm.rc:root/init.aosp_kvm.rc \
         device/AnDevCon/aosp_kvm/init.andevcon_2013_aosp_kvm.sh:system/etc/init.andevcon_2013_aosp_kvm.sh \
         device/AnDevCon/aosp_kvm/kvm.sh:kvm.sh \
         device/AnDevCon/aosp_kvm/bzImage:kernel \
-        device/AnDevCon/aosp_kvm/vold.fstab:system/etc/vold.fstab
+        device/AnDevCon/aosp_kvm/fstab.aosp_kvm:root/fstab.aosp_kvm
 
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapstartsize=8m \

@@ -5,10 +5,22 @@
 #
 
 on early-init
-    export EXTERNAL_STORAGE /mnt/sdcard
-	setprop ro.sf.lcd_density 130
     mount debugfs debugfs /sys/kernel/debug
-    chmod 755 /sys/kernel/debug
+
+    # Not sure we need anything below this line
+    chmod 755 /sys/kernel/debug      
+    # Make it tablet like
+    setprop ro.sf.lcd_density 130 
+
+on init
+    # See storage config details at http://source.android.com/tech/storage/
+    mkdir /storage/sdcard 0555 root root
+    export EXTERNAL_STORAGE /storage/sdcard
+    # Support legacy paths
+    symlink /storage/sdcard /sdcard
+    symlink /storage/sdcard /mnt/sdcard
+
+
 
 on init
 
@@ -19,6 +31,11 @@ on fs
     mount ext4 /dev/block/sda /system ro remount
     mount ext4 /dev/block/sdb /data nosuid nodev
     mount ext4 /dev/block/sdc /cache nosuid nodev
+   
+    # We could mount the sdcard like this if we wanted: " mount vfat /dev/block/sdd /storage/sdcard "  but I chose to show vold's fstab usage.
+    # in goldfish they do it via "mount_all /fstab.goldfish" - but there they have mmcblock from the goldfish device definition at the QEMU project.
+    mount_all /fstab.aosp_kvm
+
 
 on post-fs
 
@@ -51,12 +68,9 @@ service iprenew_eth0 /system/bin/dhcpcd -o domain_name_servers -n
     class main
     oneshot
 
-# NUBO: applications that request external memory see virtual sd.
-# create virtual SD card at /mnt/sdcard, based on the /data/media directory
-# daemon will drop to user/group system/media_rw after initializing
-# underlying files in /data/media will be created with user and group media_rw (1023)
-service sdcard /system/bin/sdcard /data/media /mnt/sdcard 1023 1023
-    class core
+#
+# Educational Example: This is how you add your own native service at initialization
+#
+service the_most /system/bin/hello_c_example
     class main
-    class late_start
     oneshot

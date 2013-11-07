@@ -3,6 +3,8 @@
 # Create a cache img if it doesn't exist
 if [ ! -e cache.img ] ; then
    dd if=/dev/zero of=cache.img bs=1M count=200
+   # force ext4 creation on a non block device
+   mkfs.ext4 -F cache.img
 fi
 
 # Run KVM.

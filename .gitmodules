@@ -1,0 +1,3 @@
+[submodule "aosp_kvm/external/AndroidTerm"]
+	path = aosp_kvm/external/AndroidTerm
+	url = http://git.android-x86.org/platform/packages/apps/AndroidTerm
