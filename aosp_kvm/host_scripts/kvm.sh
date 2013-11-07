@@ -17,9 +17,10 @@ kvm \
 -hda system.img \
 -hdb userdata.img \
 -hdc cache.img \
--kernel bzImage \
+-hdd sdcard.img \
+-kernel kernel \
 -initrd ramdisk.img \
--append "qemu=1 console=ttyS0 androidboot.hardware=aosp_kvm android.checkjni=1 ndns=1 vga=788 androidboot.console=ttyS0" \
+-append "qemu=1 console=ttyS0 androidboot.hardware=aosp_kvm android.checkjni=1 ndns=1 vga=794 androidboot.console=ttyS0" \
 -serial /dev/tty \
 -net user -net nic \
 -m 2048 && stty sane

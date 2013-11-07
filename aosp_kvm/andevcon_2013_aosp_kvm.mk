@@ -1,3 +1,10 @@
+#
+#
+# andevcon_2013_aosp_kvm.mk
+# 
+# This file includes the "firmware" and "software" definition of the device. 
+#
+#
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 LOCAL_PATH := $(call my-dir)
@@ -22,12 +29,11 @@ PRODUCT_PACKAGES += \
         start-ssh \
         AndroidTerm \
         hello_c_example \
-        rild
 
 PRODUCT_COPY_FILES += \
         device/AnDevCon/aosp_kvm/init.aosp_kvm.rc:root/init.aosp_kvm.rc \
         device/AnDevCon/aosp_kvm/init.andevcon_2013_aosp_kvm.sh:system/etc/init.andevcon_2013_aosp_kvm.sh \
-        device/AnDevCon/aosp_kvm/kvm.sh:kvm.sh \
+        device/AnDevCon/aosp_kvm/host_scripts/kvm.sh:kvm.sh \
         device/AnDevCon/aosp_kvm/bzImage:kernel \
         device/AnDevCon/aosp_kvm/fstab.aosp_kvm:root/fstab.aosp_kvm
 
